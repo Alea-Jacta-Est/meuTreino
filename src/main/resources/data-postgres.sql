@@ -1,0 +1,1 @@
+INSERT INTO aluno (nome,idade,email,telefone) values ('Fábio Luiz De Franchi Marques', 39, 'fabio.franchi@gmail.com','81999873752');
