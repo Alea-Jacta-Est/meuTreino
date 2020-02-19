@@ -5,54 +5,43 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
 
 @Entity
-public class CargaExecucao implements Serializable{
+public class CargaExecucao implements Serializable {
 
 	private static final long serialVersionUID = -6139186010887763805L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idCarga;
-	
-	@Column(name = "idExecucao", insertable = false, updatable = false )	
+
+	@Column(name = "idExecucao", insertable = false, updatable = false)
 	private Long idExercucao;
-	
-	@Column(name = "idExercicio", insertable = false, updatable = false )	
+
+	@Column(name = "idExercicio", insertable = false, updatable = false)
 	private Long idExercicio;
-	
-	@Column(name = "idPlanejamento", insertable = false, updatable = false )	
+
+	@Column(name = "idPlanejamento", insertable = false, updatable = false)
 	private Long idPlanejamento;
-	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumns({ @JoinColumn(name = "idExecucao", referencedColumnName = "idExecucao"),
-		@JoinColumn(name = "idExercicio", referencedColumnName = "idExercicio"),
-		@JoinColumn(name = "idPlanejamento", referencedColumnName = "idPlanejamento") })
-	private ExercicioExecucao exercicioExecuao;
-	
+
 	private Integer carga;
-	
+
 	private LocalDate dataCadastro;
 
 	public CargaExecucao() {
 		super();
 	}
 
-	public CargaExecucao(Long idCarga, Long idExercucao, Long idExercicio, Long idPlanejamento,
-			ExercicioExecucao exercicioExecuao, Integer carga, LocalDate dataCadastro) {
+	public CargaExecucao(Long idCarga, Long idExercucao, Long idExercicio, Long idPlanejamento, Integer carga,
+			LocalDate dataCadastro) {
 		super();
 		this.idCarga = idCarga;
 		this.idExercucao = idExercucao;
 		this.idExercicio = idExercicio;
 		this.idPlanejamento = idPlanejamento;
-		this.exercicioExecuao = exercicioExecuao;
 		this.carga = carga;
 		this.dataCadastro = dataCadastro;
 	}
@@ -89,14 +78,6 @@ public class CargaExecucao implements Serializable{
 		this.idPlanejamento = idPlanejamento;
 	}
 
-	public ExercicioExecucao getExercicioExecuao() {
-		return exercicioExecuao;
-	}
-
-	public void setExercicioExecuao(ExercicioExecucao exercicioExecuao) {
-		this.exercicioExecuao = exercicioExecuao;
-	}
-
 	public Integer getCarga() {
 		return carga;
 	}
@@ -119,7 +100,6 @@ public class CargaExecucao implements Serializable{
 		int result = 1;
 		result = prime * result + ((carga == null) ? 0 : carga.hashCode());
 		result = prime * result + ((dataCadastro == null) ? 0 : dataCadastro.hashCode());
-		result = prime * result + ((exercicioExecuao == null) ? 0 : exercicioExecuao.hashCode());
 		result = prime * result + ((idCarga == null) ? 0 : idCarga.hashCode());
 		result = prime * result + ((idExercicio == null) ? 0 : idExercicio.hashCode());
 		result = prime * result + ((idExercucao == null) ? 0 : idExercucao.hashCode());
@@ -146,11 +126,6 @@ public class CargaExecucao implements Serializable{
 				return false;
 		} else if (!dataCadastro.equals(other.dataCadastro))
 			return false;
-		if (exercicioExecuao == null) {
-			if (other.exercicioExecuao != null)
-				return false;
-		} else if (!exercicioExecuao.equals(other.exercicioExecuao))
-			return false;
 		if (idCarga == null) {
 			if (other.idCarga != null)
 				return false;
@@ -173,6 +148,5 @@ public class CargaExecucao implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
+
 }

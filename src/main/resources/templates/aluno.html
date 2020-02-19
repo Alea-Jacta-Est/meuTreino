@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Meu Treino</title>
+</head>
+<body>
+	<h1>Alunos</h1>
+
+	<table>
+		<tr>
+			<th>CÓDIGO</th>
+			<th>NOME</th>
+			<th>IDADE</th>
+			<th>E-MAIL</th>
+			<th>TELEFONE</th>
+			<th>DATA CADASTRO</th>
+		</tr>
+		
+		<tr th:each="aluno : ${alunosList}">
+			<td th:text="${aluno.idAluno}"></td>
+			<td th:text="${aluno.nome}"></td>
+			<td th:text="${aluno.idade}"></td>
+			<td th:text="${aluno.email}"></td>
+			<td th:text="${aluno.telefone}"></td>
+			<td th:text="${aluno.dataCadastro}"></td>
+		</tr>
+
+	</table>
+</body>
+</html>

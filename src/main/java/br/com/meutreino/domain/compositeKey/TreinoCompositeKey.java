@@ -13,17 +13,17 @@ public class TreinoCompositeKey implements Serializable {
 
 	Long idAluno;
 
-	Long idPlanejamentoAula;
+	Long idPlanejamento;
 
 	public TreinoCompositeKey() {
 		super();
 	}
 
-	public TreinoCompositeKey(Long idTreino, Long idAluno, Long idPlanejamentoAula) {
+	public TreinoCompositeKey(Long idTreino, Long idAluno, Long idPlanejamento) {
 		super();
 		this.idTreino = idTreino;
 		this.idAluno = idAluno;
-		this.idPlanejamentoAula = idPlanejamentoAula;
+		this.idPlanejamento = idPlanejamento;
 	}
 
 	public Long getIdTreino() {
@@ -43,11 +43,11 @@ public class TreinoCompositeKey implements Serializable {
 	}
 
 	public Long getIdPlanejamentoAula() {
-		return idPlanejamentoAula;
+		return idPlanejamento;
 	}
 
-	public void setIdPlanejamentoAula(Long idPlanejamentoAula) {
-		this.idPlanejamentoAula = idPlanejamentoAula;
+	public void setIdPlanejamentoAula(Long idPlanejamento) {
+		this.idPlanejamento = idPlanejamento;
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class TreinoCompositeKey implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((idAluno == null) ? 0 : idAluno.hashCode());
-		result = prime * result + ((idPlanejamentoAula == null) ? 0 : idPlanejamentoAula.hashCode());
+		result = prime * result + ((idPlanejamento == null) ? 0 : idPlanejamento.hashCode());
 		result = prime * result + ((idTreino == null) ? 0 : idTreino.hashCode());
 		return result;
 	}
@@ -74,10 +74,10 @@ public class TreinoCompositeKey implements Serializable {
 				return false;
 		} else if (!idAluno.equals(other.idAluno))
 			return false;
-		if (idPlanejamentoAula == null) {
-			if (other.idPlanejamentoAula != null)
+		if (idPlanejamento == null) {
+			if (other.idPlanejamento != null)
 				return false;
-		} else if (!idPlanejamentoAula.equals(other.idPlanejamentoAula))
+		} else if (!idPlanejamento.equals(other.idPlanejamento))
 			return false;
 		if (idTreino == null) {
 			if (other.idTreino != null)

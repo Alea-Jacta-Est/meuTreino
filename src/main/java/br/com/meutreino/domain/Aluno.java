@@ -2,6 +2,7 @@ package br.com.meutreino.domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -11,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
 @Entity
@@ -24,7 +26,10 @@ public class Aluno implements Serializable {
 
 	private String nome;
 
-	private Short idade;
+	private LocalDate dataNascimento;
+
+	@Transient
+	private int idade;
 
 	private String email;
 
@@ -35,21 +40,22 @@ public class Aluno implements Serializable {
 	@Version
 	private Integer versao;
 
-	@OneToMany(mappedBy = "aluno", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "idAluno", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	Set<Contrato> contratos;
-	
-	@OneToMany(mappedBy = "aluno", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "idAluno", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	Set<Treino> treinos;
 
 	public Aluno() {
 		super();
 	}
 
-	public Aluno(Long idAluno, String nome, Short idade, String email, String telefone, LocalDate dataCadastro,
-			Integer versao, Set<Contrato> contratos, Set<Treino> treinos) {
+	public Aluno(Long idAluno, String nome, LocalDate dataNascimento, Short idade, String email, String telefone,
+			LocalDate dataCadastro, Integer versao, Set<Contrato> contratos, Set<Treino> treinos) {
 		super();
 		this.idAluno = idAluno;
 		this.nome = nome;
+		this.dataNascimento = dataNascimento;
 		this.idade = idade;
 		this.email = email;
 		this.telefone = telefone;
@@ -75,12 +81,18 @@ public class Aluno implements Serializable {
 		this.nome = nome;
 	}
 
-	public Short getIdade() {
-		return idade;
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
 	}
 
-	public void setIdade(Short idade) {
-		this.idade = idade;
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
+		
+		this.idade = Period.between(dataNascimento, LocalDate.now()).getYears();
+	}
+
+	public int getIdade() {
+		return idade;
 	}
 
 	public String getEmail() {
@@ -135,14 +147,12 @@ public class Aluno implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((contratos == null) ? 0 : contratos.hashCode());
 		result = prime * result + ((dataCadastro == null) ? 0 : dataCadastro.hashCode());
+		result = prime * result + ((dataNascimento == null) ? 0 : dataNascimento.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((idAluno == null) ? 0 : idAluno.hashCode());
-		result = prime * result + ((idade == null) ? 0 : idade.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		result = prime * result + ((telefone == null) ? 0 : telefone.hashCode());
-		result = prime * result + ((treinos == null) ? 0 : treinos.hashCode());
 		result = prime * result + ((versao == null) ? 0 : versao.hashCode());
 		return result;
 	}
@@ -156,15 +166,15 @@ public class Aluno implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Aluno other = (Aluno) obj;
-		if (contratos == null) {
-			if (other.contratos != null)
-				return false;
-		} else if (!contratos.equals(other.contratos))
-			return false;
 		if (dataCadastro == null) {
 			if (other.dataCadastro != null)
 				return false;
 		} else if (!dataCadastro.equals(other.dataCadastro))
+			return false;
+		if (dataNascimento == null) {
+			if (other.dataNascimento != null)
+				return false;
+		} else if (!dataNascimento.equals(other.dataNascimento))
 			return false;
 		if (email == null) {
 			if (other.email != null)
@@ -176,11 +186,6 @@ public class Aluno implements Serializable {
 				return false;
 		} else if (!idAluno.equals(other.idAluno))
 			return false;
-		if (idade == null) {
-			if (other.idade != null)
-				return false;
-		} else if (!idade.equals(other.idade))
-			return false;
 		if (nome == null) {
 			if (other.nome != null)
 				return false;
@@ -191,11 +196,6 @@ public class Aluno implements Serializable {
 				return false;
 		} else if (!telefone.equals(other.telefone))
 			return false;
-		if (treinos == null) {
-			if (other.treinos != null)
-				return false;
-		} else if (!treinos.equals(other.treinos))
-			return false;
 		if (versao == null) {
 			if (other.versao != null)
 				return false;
@@ -204,5 +204,4 @@ public class Aluno implements Serializable {
 		return true;
 	}
 
-	
 }

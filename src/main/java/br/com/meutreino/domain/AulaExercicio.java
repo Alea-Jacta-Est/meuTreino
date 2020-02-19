@@ -8,9 +8,10 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumns;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import br.com.meutreino.domain.compositeKey.AulaExercicioCompositeKey;
 
@@ -26,36 +27,32 @@ public class AulaExercicio {
 	@JoinColumn(name = "idExercicio", nullable = false)
 	private Long idExercicio;
 
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "idExercicio")
-	@MapsId
-	private Exercicio exercicio;
-
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "idPlanejamento")
-	@MapsId
-	private PlanejamentoAula planejamentoAula;
-
 	private Short orderExecucao;
 
 	private String observacao;
 
 	private String linkExecucao;
 
-	@OneToMany(mappedBy = "aulaExercicio", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "idExercicio")
+	@MapsId
+	private Exercicio exercicio;
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumns({ @JoinColumn(name = "idExercicio", referencedColumnName = "idExercicio"),
+			@JoinColumn(name = "idPlanejamento", referencedColumnName = "idPlanejamento") })
 	private Set<ExercicioExecucao> exercicioExecucoes;
 
 	public AulaExercicio() {
 		super();
 	}
 
-	public AulaExercicio(Long idPlanejamento, Long idExercicio, Exercicio exercicio, PlanejamentoAula planejamentoAula,
-			Short orderExecucao, String observacao, String linkExecucao, Set<ExercicioExecucao> exercicioExecucoes) {
+	public AulaExercicio(Long idPlanejamento, Long idExercicio, Exercicio exercicio, Short orderExecucao,
+			String observacao, String linkExecucao, Set<ExercicioExecucao> exercicioExecucoes) {
 		super();
 		this.idPlanejamento = idPlanejamento;
 		this.idExercicio = idExercicio;
 		this.exercicio = exercicio;
-		this.planejamentoAula = planejamentoAula;
 		this.orderExecucao = orderExecucao;
 		this.observacao = observacao;
 		this.linkExecucao = linkExecucao;
@@ -84,14 +81,6 @@ public class AulaExercicio {
 
 	public void setExercicio(Exercicio exercicio) {
 		this.exercicio = exercicio;
-	}
-
-	public PlanejamentoAula getPlanejamentoAula() {
-		return planejamentoAula;
-	}
-
-	public void setPlanejamentoAula(PlanejamentoAula planejamentoAula) {
-		this.planejamentoAula = planejamentoAula;
 	}
 
 	public Short getOrderExecucao() {
@@ -137,7 +126,6 @@ public class AulaExercicio {
 		result = prime * result + ((linkExecucao == null) ? 0 : linkExecucao.hashCode());
 		result = prime * result + ((observacao == null) ? 0 : observacao.hashCode());
 		result = prime * result + ((orderExecucao == null) ? 0 : orderExecucao.hashCode());
-		result = prime * result + ((planejamentoAula == null) ? 0 : planejamentoAula.hashCode());
 		return result;
 	}
 
@@ -185,11 +173,7 @@ public class AulaExercicio {
 				return false;
 		} else if (!orderExecucao.equals(other.orderExecucao))
 			return false;
-		if (planejamentoAula == null) {
-			if (other.planejamentoAula != null)
-				return false;
-		} else if (!planejamentoAula.equals(other.planejamentoAula))
-			return false;
+
 		return true;
 	}
 

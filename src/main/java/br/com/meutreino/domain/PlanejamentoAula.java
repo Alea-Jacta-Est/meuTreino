@@ -10,8 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -23,24 +21,25 @@ public class PlanejamentoAula implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idPlanejamento;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "idProfessor", nullable = false)
-	private Professor professor;
+	private Long idProfessor;
 
 	private LocalDate dataCadastro;
 
-	@OneToMany(mappedBy = "planejamentoAula", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "idPlanejamento", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<AulaExercicio> aulaExercicios;
+	
+	@OneToMany(mappedBy = "idPlanejamento", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<Treino> treinos;	
 
 	public PlanejamentoAula() {
 		super();
 	}
 
-	public PlanejamentoAula(Long idPlanejamento, Professor professor, LocalDate dataCadastro,
+	public PlanejamentoAula(Long idPlanejamento, Long idProfessor, LocalDate dataCadastro,
 			Set<AulaExercicio> aulaExercicios) {
 		super();
 		this.idPlanejamento = idPlanejamento;
-		this.professor = professor;
+		this.idProfessor = idProfessor;
 		this.dataCadastro = dataCadastro;
 		this.aulaExercicios = aulaExercicios;
 	}
@@ -53,12 +52,12 @@ public class PlanejamentoAula implements Serializable {
 		this.idPlanejamento = idPlanejamento;
 	}
 
-	public Professor getProfessor() {
-		return professor;
+	public Long getIdProfessor() {
+		return idProfessor;
 	}
 
-	public void setProfessor(Professor professor) {
-		this.professor = professor;
+	public void setIdProfessor(Long idProfessor) {
+		this.idProfessor = idProfessor;
 	}
 
 	public LocalDate getDataCadastro() {
@@ -84,7 +83,7 @@ public class PlanejamentoAula implements Serializable {
 		result = prime * result + ((aulaExercicios == null) ? 0 : aulaExercicios.hashCode());
 		result = prime * result + ((dataCadastro == null) ? 0 : dataCadastro.hashCode());
 		result = prime * result + ((idPlanejamento == null) ? 0 : idPlanejamento.hashCode());
-		result = prime * result + ((professor == null) ? 0 : professor.hashCode());
+		result = prime * result + ((idProfessor == null) ? 0 : idProfessor.hashCode());
 		return result;
 	}
 
@@ -112,10 +111,10 @@ public class PlanejamentoAula implements Serializable {
 				return false;
 		} else if (!idPlanejamento.equals(other.idPlanejamento))
 			return false;
-		if (professor == null) {
-			if (other.professor != null)
+		if (idProfessor == null) {
+			if (other.idProfessor != null)
 				return false;
-		} else if (!professor.equals(other.professor))
+		} else if (!idProfessor.equals(other.idProfessor))
 			return false;
 		return true;
 	}

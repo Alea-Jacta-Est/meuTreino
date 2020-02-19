@@ -2,6 +2,7 @@ package br.com.meutreino.domain;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import br.com.meutreino.domain.compositeKey.ExercicioExecucaoCompositeKey;
@@ -22,41 +22,38 @@ public class ExercicioExecucao {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	Long idExecucao;
+	private Long idExecucao;
 
 	@Id
 	@Column(name = "idPlanejamento", insertable = false, updatable = false)
-	Long idPlanejamento;
+	private Long idPlanejamento;
 
 	@Id
 	@Column(name = "idExercicio", insertable = false, updatable = false)
-	Long idExercicio;
+	private Long idExercicio; 
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumns({ @JoinColumn(name = "idExercicio", referencedColumnName = "idExercicio"),
-			@JoinColumn(name = "idPlanejamento", referencedColumnName = "idPlanejamento") })
-	AulaExercicio aulaExercicio;
+	private Integer serie;
 
-	Integer serie;
+	private Integer numeroRepeticaoMinimo;
 
-	Integer numeroRepeticaoMinimo;
+	private Integer numeroRepeticaoMaximo;
 
-	Integer numeroRepeticaoMaximo;
-	
-	@OneToMany(mappedBy = "exercicioExecuao")
-	Set<CargaExecucao> cargaExecucoes;
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumns({ @JoinColumn(name = "idExecucao", referencedColumnName = "idExecucao"),
+		@JoinColumn(name = "idExercicio", referencedColumnName = "idExercicio"),
+		@JoinColumn(name = "idPlanejamento", referencedColumnName = "idPlanejamento") })
+	private Set<CargaExecucao> cargaExecucoes;
 
 	public ExercicioExecucao() {
 		super();
 	}
 
-	public ExercicioExecucao(Long idExecucao, Long idPlanejamento, Long idExercicio, AulaExercicio aulaExercicio,
-			Integer serie, Integer numeroRepeticaoMinimo, Integer numeroRepeticaoMaximo) {
+	public ExercicioExecucao(Long idExecucao, Long idPlanejamento, Long idExercicio, Integer serie,
+			Integer numeroRepeticaoMinimo, Integer numeroRepeticaoMaximo) {
 		super();
 		this.idExecucao = idExecucao;
 		this.idPlanejamento = idPlanejamento;
 		this.idExercicio = idExercicio;
-		this.aulaExercicio = aulaExercicio;
 		this.serie = serie;
 		this.numeroRepeticaoMinimo = numeroRepeticaoMinimo;
 		this.numeroRepeticaoMaximo = numeroRepeticaoMaximo;
@@ -86,14 +83,6 @@ public class ExercicioExecucao {
 		this.idExercicio = idExercicio;
 	}
 
-	public AulaExercicio getAulaExercicio() {
-		return aulaExercicio;
-	}
-
-	public void setAulaExercicio(AulaExercicio aulaExercicio) {
-		this.aulaExercicio = aulaExercicio;
-	}
-
 	public Integer getSerie() {
 		return serie;
 	}
@@ -118,11 +107,19 @@ public class ExercicioExecucao {
 		this.numeroRepeticaoMaximo = numeroRepeticaoMaximo;
 	}
 
+	public Set<CargaExecucao> getCargaExecucoes() {
+		return cargaExecucoes;
+	}
+
+	public void setCargaExecucoes(Set<CargaExecucao> cargaExecucoes) {
+		this.cargaExecucoes = cargaExecucoes;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((aulaExercicio == null) ? 0 : aulaExercicio.hashCode());
+		result = prime * result + ((cargaExecucoes == null) ? 0 : cargaExecucoes.hashCode());
 		result = prime * result + ((idExecucao == null) ? 0 : idExecucao.hashCode());
 		result = prime * result + ((idExercicio == null) ? 0 : idExercicio.hashCode());
 		result = prime * result + ((idPlanejamento == null) ? 0 : idPlanejamento.hashCode());
@@ -141,10 +138,10 @@ public class ExercicioExecucao {
 		if (getClass() != obj.getClass())
 			return false;
 		ExercicioExecucao other = (ExercicioExecucao) obj;
-		if (aulaExercicio == null) {
-			if (other.aulaExercicio != null)
+		if (cargaExecucoes == null) {
+			if (other.cargaExecucoes != null)
 				return false;
-		} else if (!aulaExercicio.equals(other.aulaExercicio))
+		} else if (!cargaExecucoes.equals(other.cargaExecucoes))
 			return false;
 		if (idExecucao == null) {
 			if (other.idExecucao != null)

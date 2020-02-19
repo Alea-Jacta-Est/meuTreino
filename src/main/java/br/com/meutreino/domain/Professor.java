@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Version;
 
 @Entity
 public class Professor implements Serializable {
@@ -27,28 +28,32 @@ public class Professor implements Serializable {
 
 	private String email;
 
-	private LocalDate dataCadastro;
+	private LocalDate dataCadastro; 
 
-	@OneToMany(mappedBy = "professor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	Set<Contrato> contratos;
+	@Version
+	private Integer versao;
 
-	@OneToMany(mappedBy = "professor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<PlanejamentoAula> planejamentosAula;
+	@OneToMany(mappedBy = "idProfessor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<Contrato> contratos;
+
+	@OneToMany(mappedBy = "idProfessor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<PlanejamentoAula> planejamentoAulas;
 
 	public Professor() {
 		super();
 	}
 
 	public Professor(Long idProfessor, String nome, String telefone, String email, LocalDate dataCadastro,
-			Set<Contrato> contratos, Set<PlanejamentoAula> planejamentosAula) {
+			Integer versao, Set<Contrato> contratos, Set<PlanejamentoAula> planejamentoAulas) {
 		super();
 		this.idProfessor = idProfessor;
 		this.nome = nome;
 		this.telefone = telefone;
 		this.email = email;
 		this.dataCadastro = dataCadastro;
+		this.versao = versao;
 		this.contratos = contratos;
-		this.planejamentosAula = planejamentosAula;
+		this.planejamentoAulas = planejamentoAulas;
 	}
 
 	public Long getIdProfessor() {
@@ -91,20 +96,28 @@ public class Professor implements Serializable {
 		this.dataCadastro = dataCadastro;
 	}
 
-	public Set<Contrato> getRelacionamentos() {
+	public Integer getVersao() {
+		return versao;
+	}
+
+	public void setVersao(Integer versao) {
+		this.versao = versao;
+	}
+
+	public Set<Contrato> getContratos() {
 		return contratos;
 	}
 
-	public void setRelacionamentos(Set<Contrato> contratos) {
+	public void setContratos(Set<Contrato> contratos) {
 		this.contratos = contratos;
 	}
 
-	public Set<PlanejamentoAula> getPlanejamentosAula() {
-		return planejamentosAula;
+	public Set<PlanejamentoAula> getPlanejamentoAulas() {
+		return planejamentoAulas;
 	}
 
-	public void setPlanejamentosAula(Set<PlanejamentoAula> planejamentosAula) {
-		this.planejamentosAula = planejamentosAula;
+	public void setPlanejamentoAulas(Set<PlanejamentoAula> planejamentoAulas) {
+		this.planejamentoAulas = planejamentoAulas;
 	}
 
 	@Override
@@ -115,9 +128,8 @@ public class Professor implements Serializable {
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((idProfessor == null) ? 0 : idProfessor.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result + ((planejamentosAula == null) ? 0 : planejamentosAula.hashCode());
-		result = prime * result + ((contratos == null) ? 0 : contratos.hashCode());
 		result = prime * result + ((telefone == null) ? 0 : telefone.hashCode());
+		result = prime * result + ((versao == null) ? 0 : versao.hashCode());
 		return result;
 	}
 
@@ -150,20 +162,15 @@ public class Professor implements Serializable {
 				return false;
 		} else if (!nome.equals(other.nome))
 			return false;
-		if (planejamentosAula == null) {
-			if (other.planejamentosAula != null)
-				return false;
-		} else if (!planejamentosAula.equals(other.planejamentosAula))
-			return false;
-		if (contratos == null) {
-			if (other.contratos != null)
-				return false;
-		} else if (!contratos.equals(other.contratos))
-			return false;
 		if (telefone == null) {
 			if (other.telefone != null)
 				return false;
 		} else if (!telefone.equals(other.telefone))
+			return false;
+		if (versao == null) {
+			if (other.versao != null)
+				return false;
+		} else if (!versao.equals(other.versao))
 			return false;
 		return true;
 	}
