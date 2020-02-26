@@ -12,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 import javax.persistence.Version;
 
 @Entity
@@ -27,9 +26,6 @@ public class Aluno implements Serializable {
 	private String nome;
 
 	private LocalDate dataNascimento;
-
-	@Transient
-	private int idade;
 
 	private String email;
 
@@ -50,13 +46,12 @@ public class Aluno implements Serializable {
 		super();
 	}
 
-	public Aluno(Long idAluno, String nome, LocalDate dataNascimento, Short idade, String email, String telefone,
+	public Aluno(Long idAluno, String nome, LocalDate dataNascimento, String email, String telefone,
 			LocalDate dataCadastro, Integer versao, Set<Contrato> contratos, Set<Treino> treinos) {
 		super();
 		this.idAluno = idAluno;
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
-		this.idade = idade;
 		this.email = email;
 		this.telefone = telefone;
 		this.dataCadastro = dataCadastro;
@@ -87,12 +82,10 @@ public class Aluno implements Serializable {
 
 	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
-		
-		this.idade = Period.between(dataNascimento, LocalDate.now()).getYears();
 	}
 
 	public int getIdade() {
-		return idade;
+		return Period.between(dataNascimento, LocalDate.now()).getYears();
 	}
 
 	public String getEmail() {

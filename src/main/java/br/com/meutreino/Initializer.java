@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import br.com.meutreino.controller.AlunoController;
 import br.com.meutreino.domain.Aluno;
 import br.com.meutreino.domain.AulaExercicio;
 import br.com.meutreino.domain.Contrato;
@@ -56,7 +57,7 @@ public class Initializer implements ApplicationListener<ContextRefreshedEvent> {
 		// DADOS ALUNO
 		Aluno aluno = new Aluno();
 		aluno.setNome("Fábio Luiz De Franchi Marques");
-		aluno.setDataNascimento(LocalDate.parse("1980-04-30"));;
+		aluno.setDataNascimento(LocalDate.parse("1980-04-30"));
 		aluno.setEmail("fabio.franchi@gmail.com");
 		aluno.setTelefone("5581999873752");
 		aluno.setDataCadastro(LocalDate.now());

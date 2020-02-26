@@ -1,24 +1,22 @@
 package br.com.meutreino.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import br.com.meutreino.repository.AlunoRepository;
+import br.com.meutreino.service.AlunoService;
 
 @Controller
 public class AlunoController {
 
-	private AlunoRepository alunoRepository;
-
-	public AlunoController(AlunoRepository alunoRepository) {
-		super();
-		this.alunoRepository = alunoRepository;
-	}
+	@Autowired
+	private AlunoService alunoService;
 	
-	@RequestMapping("/aluno")
+	@RequestMapping("/")
 	public String getAlunos(Model model) {
-		model.addAttribute("alunosList", this.alunoRepository.findAll());
+		
+		model.addAttribute("alunosList", this.alunoService.getAlunos());
 		
 		return "aluno";
 	}
