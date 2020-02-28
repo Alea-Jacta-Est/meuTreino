@@ -1,16 +1,12 @@
 package br.com.meutreino.domain;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
 
 import br.com.meutreino.domain.compositeKey.TreinoAgendaCompositeKey;
 
@@ -21,7 +17,7 @@ public class TreinoAgenda implements Serializable {
 	private static final long serialVersionUID = -1194405381772011509L;
 
 	@Id
-	Timestamp dataTreino;
+	LocalDateTime dataTreino;
 
 	@Id
 	@Column(name = "idTreino", insertable = false, updatable = false)
@@ -35,30 +31,23 @@ public class TreinoAgenda implements Serializable {
 	@Column(name = "idAluno", insertable = false, updatable = false)
 	Long idAluno;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumns({ @JoinColumn(name = "idTreino", referencedColumnName = "idTreino"),
-			@JoinColumn(name = "idPlanejamento", referencedColumnName = "idPlanejamento"),
-			@JoinColumn(name = "idAluno", referencedColumnName = "idAluno") })
-	Treino treino;
-
 	public TreinoAgenda() {
 		super();
 	}
 
-	public TreinoAgenda(Timestamp dataTreino, Long idTreino, Long idPlanejamento, Long idAluno, Treino treino) {
+	public TreinoAgenda(LocalDateTime dataTreino, Long idTreino, Long idPlanejamento, Long idAluno) {
 		super();
 		this.dataTreino = dataTreino;
 		this.idTreino = idTreino;
 		this.idPlanejamento = idPlanejamento;
 		this.idAluno = idAluno;
-		this.treino = treino;
 	}
 
-	public Timestamp getDataTreino() {
+	public LocalDateTime getDataTreino() {
 		return dataTreino;
 	}
 
-	public void setDataTreino(Timestamp dataTreino) {
+	public void setDataTreino(LocalDateTime dataTreino) {
 		this.dataTreino = dataTreino;
 	}
 
@@ -86,14 +75,6 @@ public class TreinoAgenda implements Serializable {
 		this.idAluno = idAluno;
 	}
 
-	public Treino getTreino() {
-		return treino;
-	}
-
-	public void setTreino(Treino treino) {
-		this.treino = treino;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -102,7 +83,6 @@ public class TreinoAgenda implements Serializable {
 		result = prime * result + ((idAluno == null) ? 0 : idAluno.hashCode());
 		result = prime * result + ((idPlanejamento == null) ? 0 : idPlanejamento.hashCode());
 		result = prime * result + ((idTreino == null) ? 0 : idTreino.hashCode());
-		result = prime * result + ((treino == null) ? 0 : treino.hashCode());
 		return result;
 	}
 
@@ -135,11 +115,7 @@ public class TreinoAgenda implements Serializable {
 				return false;
 		} else if (!idTreino.equals(other.idTreino))
 			return false;
-		if (treino == null) {
-			if (other.treino != null)
-				return false;
-		} else if (!treino.equals(other.treino))
-			return false;
+		
 		return true;
 	}
 

@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
@@ -29,7 +31,10 @@ public class Treino {
 	@Id
 	private Long idPlanejamento;
 
-	@OneToMany(mappedBy = "treino", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumns({ @JoinColumn(name = "idTreino", referencedColumnName = "idTreino"),
+		@JoinColumn(name = "idPlanejamento", referencedColumnName = "idPlanejamento"),
+		@JoinColumn(name = "idAluno", referencedColumnName = "idAluno") })
 	private Set<TreinoAgenda> treinoAgenda;
 
 	private String tipo;

@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Exercicio implements Serializable {
@@ -17,10 +20,15 @@ public class Exercicio implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idExercicio;
 
+	@NotEmpty(message = "O nome não pode ser vazio!")
+	@Size(min=3, max=60, message = "Tamanho máximo para o nome é de 60 caracteres")
 	private String nome;
 
+	@NotEmpty(message = "O grupo muscular não pode ser vazio!")
+	@Size(max=20)
 	private String grupoMuscular;
 
+	@NotNull
 	private LocalDate dataCadastro;
 
 	public Exercicio() {

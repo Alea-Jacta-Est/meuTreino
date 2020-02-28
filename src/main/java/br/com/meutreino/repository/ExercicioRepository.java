@@ -1,9 +1,12 @@
 package br.com.meutreino.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.meutreino.domain.Exercicio;
 
-public interface ExercicioRepository extends CrudRepository<Exercicio, Long> {
+public interface ExercicioRepository extends JpaRepository<Exercicio, Long> {
 
+	public List<Exercicio> findByNomeLike(String nome);
 }

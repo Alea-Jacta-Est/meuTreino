@@ -1,7 +1,7 @@
 package br.com.meutreino.domain.compositeKey;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Embeddable;
 
@@ -10,7 +10,7 @@ public class TreinoAgendaCompositeKey implements Serializable {
 
 	private static final long serialVersionUID = 5738596647186505584L;
 
-	LocalDate dataTreino;
+	LocalDateTime dataTreino;
 
 	Long idTreino;
 
@@ -22,7 +22,7 @@ public class TreinoAgendaCompositeKey implements Serializable {
 		super();
 	}
 
-	public TreinoAgendaCompositeKey(LocalDate dataTreino, Long idTreino, Long idPlanejamento, Long idAluno) {
+	public TreinoAgendaCompositeKey(LocalDateTime dataTreino, Long idTreino, Long idPlanejamento, Long idAluno) {
 		super();
 		this.dataTreino = dataTreino;
 		this.idTreino = idTreino;
@@ -30,11 +30,11 @@ public class TreinoAgendaCompositeKey implements Serializable {
 		this.idAluno = idAluno;
 	}
 
-	public LocalDate getDataTreino() {
+	public LocalDateTime getDataTreino() {
 		return dataTreino;
 	}
 
-	public void setDataTreino(LocalDate dataTreino) {
+	public void setDataTreino(LocalDateTime dataTreino) {
 		this.dataTreino = dataTreino;
 	}
 

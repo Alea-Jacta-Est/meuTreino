@@ -1,5 +1,7 @@
 package br.com.meutreino.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,5 +17,13 @@ public class AlunoService {
 	public Iterable<Aluno> getAlunos(){
 		
 		return alunoRepository.findAll();
+	}
+	
+	public Optional<Aluno> consultarAluno(Aluno aluno) {
+		return alunoRepository.findById(aluno.getIdAluno());
+	}
+	
+	public Aluno inserir(Aluno aluno) {
+		return alunoRepository.save(aluno);
 	}
 }

@@ -2,6 +2,7 @@ package br.com.meutreino;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.transaction.Transactional;
 
@@ -10,7 +11,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import br.com.meutreino.controller.AlunoController;
 import br.com.meutreino.domain.Aluno;
 import br.com.meutreino.domain.AulaExercicio;
 import br.com.meutreino.domain.Contrato;
@@ -18,12 +18,14 @@ import br.com.meutreino.domain.Exercicio;
 import br.com.meutreino.domain.PlanejamentoAula;
 import br.com.meutreino.domain.Professor;
 import br.com.meutreino.domain.Treino;
+import br.com.meutreino.domain.TreinoAgenda;
 import br.com.meutreino.repository.AlunoRepository;
 import br.com.meutreino.repository.AulaExercicioRepository;
 import br.com.meutreino.repository.ContratoRepository;
 import br.com.meutreino.repository.ExercicioRepository;
 import br.com.meutreino.repository.PlanejamentoAulaRepository;
 import br.com.meutreino.repository.ProfessorRepository;
+import br.com.meutreino.repository.TreinoAgendaRepository;
 import br.com.meutreino.repository.TreinoRepository;
 
 @Component
@@ -49,6 +51,9 @@ public class Initializer implements ApplicationListener<ContextRefreshedEvent> {
 
 	@Autowired
 	TreinoRepository treinoRepository;
+	
+	@Autowired
+	TreinoAgendaRepository treinoAgendaRepository;
 
 	@Override
 	@Transactional
@@ -111,7 +116,24 @@ public class Initializer implements ApplicationListener<ContextRefreshedEvent> {
 		treino.setIdAluno(aluno.getIdAluno());
 		treino.setIdPlanejamento(planejamentoAula.getIdPlanejamento());
 
-		this.treinoRepository.save(treino);
+		treino = this.treinoRepository.save(treino);
+		
+		// DADOS TREINO AGENDA
+		TreinoAgenda treinoAgenda = new TreinoAgenda();
+		treinoAgenda.setDataTreino(LocalDateTime.now());
+		treinoAgenda.setIdAluno(treino.getIdAluno());
+		treinoAgenda.setIdPlanejamento(treino.getIdPlanejamento());
+		treinoAgenda.setIdTreino(treino.getIdTreino());
+		
+		
+		this.treinoAgendaRepository.save(treinoAgenda);
+		
+		treinoAgenda.setDataTreino(LocalDateTime.now());
+		treinoAgenda.setIdAluno(treino.getIdAluno());
+		treinoAgenda.setIdPlanejamento(treino.getIdPlanejamento());
+		treinoAgenda.setIdTreino(treino.getIdTreino());
+		
+		this.treinoAgendaRepository.save(treinoAgenda);
 
 	}
 
