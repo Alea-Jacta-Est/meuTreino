@@ -1,9 +1,11 @@
 package br.com.meutreino.domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,23 +14,29 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Version;
 
 import br.com.meutreino.domain.compositeKey.TreinoCompositeKey;
 
 @Entity
 @IdClass(TreinoCompositeKey.class)
-public class Treino {
+public class Treino implements Serializable{
 
+	private static final long serialVersionUID = 3128356553450839517L;
+
+	@SequenceGenerator(name="treinoGenerator",sequenceName = "TREINO_SEQ", allocationSize = 5)
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long idTreino;
 
 	@Id
 	private Long idAluno;
 
 	@Id
+	@Column(name = "idPlanejamento", insertable = false, updatable = false)
 	private Long idPlanejamento;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -36,6 +44,10 @@ public class Treino {
 		@JoinColumn(name = "idPlanejamento", referencedColumnName = "idPlanejamento"),
 		@JoinColumn(name = "idAluno", referencedColumnName = "idAluno") })
 	private Set<TreinoAgenda> treinoAgenda;
+	
+	@ManyToOne()	
+	@JoinColumn(name = "idPlanejamento", referencedColumnName = "idPlanejamento", insertable = false, updatable = false)
+	private PlanejamentoAula planejamentoAula;
 
 	private String tipo;
 
@@ -137,6 +149,16 @@ public class Treino {
 
 	public void setVersao(Integer versao) {
 		this.versao = versao;
+	}
+	
+	
+
+	public PlanejamentoAula getPlanejamentoAula() {
+		return planejamentoAula;
+	}
+
+	public void setPlanejamentoAula(PlanejamentoAula planejamentoAula) {
+		this.planejamentoAula = planejamentoAula;
 	}
 
 	@Override

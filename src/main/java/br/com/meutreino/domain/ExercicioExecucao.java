@@ -1,5 +1,6 @@
 package br.com.meutreino.domain;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,15 +14,19 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 import br.com.meutreino.domain.compositeKey.ExercicioExecucaoCompositeKey;
 
 @Entity
 @IdClass(ExercicioExecucaoCompositeKey.class)
-public class ExercicioExecucao {
+public class ExercicioExecucao implements Serializable{
 
+	private static final long serialVersionUID = -4386489158460718028L;
+
+	@SequenceGenerator(name="exercicioExecucaoGenerator",sequenceName = "EXERCICIO_EXECUCAO_SEQ", allocationSize = 10)
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "exercicioExecucaoGenerator")
 	private Long idExecucao;
 
 	@Id

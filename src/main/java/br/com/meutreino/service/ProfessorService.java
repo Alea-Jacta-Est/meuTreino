@@ -7,39 +7,40 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.meutreino.domain.Aluno;
-import br.com.meutreino.repository.AlunoRepository;
+import br.com.meutreino.domain.Professor;
+import br.com.meutreino.repository.ProfessorRepository;
+
 
 @Service
-public class AlunoService {
+public class ProfessorService {
 	
 	private static final String MENSAGEM_REGISTRO_EXCLUIDO = "{\"mensagem\": \"Registro excluído!\" }";
 
 	@Autowired
-	AlunoRepository repository;
+	ProfessorRepository repository;
 		
-	public Aluno inserir(Aluno aluno) {
-		aluno.setDataCadastro(LocalDate.now());
-		return repository.save(aluno);
+	public Professor inserir(Professor professor) {
+		professor.setDataCadastro(LocalDate.now());
+		return repository.save(professor);
 	}	
 	
-	public Aluno atualizar(Aluno aluno) {
-		return repository.save(aluno);
+	public Professor atualizar(Professor professor) {
+		return repository.save(professor);
 	}
 	
-	public List<Aluno> consultarTodos(){
+	public List<Professor> consultarTodos(){
 		return repository.findAll();
 	}
 	
-	public Optional<Aluno> consultarUm(Long id) {
+	public Optional<Professor> consultarUm(Long id) {
 		return repository.findById(id);
 	}
 	
-	public List<Aluno> consultarPorNome(String nome){
+	public List<Professor> consultarPorNome(String nome){
 		return repository.findByNomeIgnoreCaseContaining(nome);
 	}
 	
-	public Optional<Aluno> consultarPorEmail(String email){
+	public Optional<Professor> consultarPorEmail(String email){
 		return repository.findByEmailIgnoreCase(email);
 	}
 	

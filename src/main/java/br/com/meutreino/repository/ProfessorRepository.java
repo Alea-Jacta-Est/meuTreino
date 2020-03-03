@@ -1,9 +1,13 @@
 package br.com.meutreino.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.meutreino.domain.Professor;
 
-public interface ProfessorRepository extends CrudRepository<Professor, Long> {
-
+public interface ProfessorRepository extends JpaRepository<Professor, Long> {
+	public List<Professor> findByNomeIgnoreCaseContaining(String nome);
+	public Optional<Professor> findByEmailIgnoreCase(String email);
 }

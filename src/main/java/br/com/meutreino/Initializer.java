@@ -90,6 +90,7 @@ public class Initializer implements ApplicationListener<ContextRefreshedEvent> {
 		PlanejamentoAula planejamentoAula = new PlanejamentoAula();
 		planejamentoAula.setIdProfessor(professor.getIdProfessor());
 		planejamentoAula.setDataCadastro(LocalDate.now());
+		planejamentoAula.setObservacao("Treino de costas e ombros para reabilização pós-operatório");
 
 		this.planejamentoAulaRepository.save(planejamentoAula);
 

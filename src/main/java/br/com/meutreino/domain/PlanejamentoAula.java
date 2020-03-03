@@ -11,36 +11,38 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class PlanejamentoAula implements Serializable {
 
 	private static final long serialVersionUID = 2968611034961584180L;
 
+	@SequenceGenerator(name="planejamentoGenerator",sequenceName = "PLANEJAMENTO_SEQ", allocationSize = 5)
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "planejamentoGenerator")
 	private Long idPlanejamento;
 
 	private Long idProfessor;
 
 	private LocalDate dataCadastro;
+	
+	private String observacao;
 
 	@OneToMany(mappedBy = "idPlanejamento", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<AulaExercicio> aulaExercicios;
-	
-	@OneToMany(mappedBy = "idPlanejamento", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<Treino> treinos;	
 
 	public PlanejamentoAula() {
 		super();
 	}
 
-	public PlanejamentoAula(Long idPlanejamento, Long idProfessor, LocalDate dataCadastro,
+	public PlanejamentoAula(Long idPlanejamento, Long idProfessor, LocalDate dataCadastro, String observacao,
 			Set<AulaExercicio> aulaExercicios) {
 		super();
 		this.idPlanejamento = idPlanejamento;
 		this.idProfessor = idProfessor;
 		this.dataCadastro = dataCadastro;
+		this.observacao = observacao;
 		this.aulaExercicios = aulaExercicios;
 	}
 
@@ -76,14 +78,22 @@ public class PlanejamentoAula implements Serializable {
 		this.aulaExercicios = aulaExercicios;
 	}
 
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((aulaExercicios == null) ? 0 : aulaExercicios.hashCode());
 		result = prime * result + ((dataCadastro == null) ? 0 : dataCadastro.hashCode());
 		result = prime * result + ((idPlanejamento == null) ? 0 : idPlanejamento.hashCode());
 		result = prime * result + ((idProfessor == null) ? 0 : idProfessor.hashCode());
+		result = prime * result + ((observacao == null) ? 0 : observacao.hashCode());
 		return result;
 	}
 
@@ -96,11 +106,6 @@ public class PlanejamentoAula implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		PlanejamentoAula other = (PlanejamentoAula) obj;
-		if (aulaExercicios == null) {
-			if (other.aulaExercicios != null)
-				return false;
-		} else if (!aulaExercicios.equals(other.aulaExercicios))
-			return false;
 		if (dataCadastro == null) {
 			if (other.dataCadastro != null)
 				return false;
@@ -116,7 +121,14 @@ public class PlanejamentoAula implements Serializable {
 				return false;
 		} else if (!idProfessor.equals(other.idProfessor))
 			return false;
+		if (observacao == null) {
+			if (other.observacao != null)
+				return false;
+		} else if (!observacao.equals(other.observacao))
+			return false;
 		return true;
 	}
+
+	
 
 }

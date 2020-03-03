@@ -1,5 +1,6 @@
 package br.com.meutreino.domain;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,11 +14,16 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import br.com.meutreino.domain.compositeKey.AulaExercicioCompositeKey;
 
 @Entity
 @IdClass(AulaExercicioCompositeKey.class)
-public class AulaExercicio {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class AulaExercicio implements Serializable{
+
+	private static final long serialVersionUID = 8437343108966704084L;
 
 	@Id
 	@JoinColumn(name = "idPlanejamento", nullable = false)

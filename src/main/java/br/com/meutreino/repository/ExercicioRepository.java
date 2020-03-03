@@ -8,5 +8,5 @@ import br.com.meutreino.domain.Exercicio;
 
 public interface ExercicioRepository extends JpaRepository<Exercicio, Long> {
 
-	public List<Exercicio> findByNomeLike(String nome);
+	public List<Exercicio> findByNomeIgnoreCaseContaining(String nome);
 }

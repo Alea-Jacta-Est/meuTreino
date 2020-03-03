@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Version;
 
 @Entity
@@ -18,8 +19,9 @@ public class Professor implements Serializable {
 
 	private static final long serialVersionUID = 3352885807072052668L;
 
+	@SequenceGenerator(name="professorGenerator",sequenceName = "PROFESSOR_SEQ", allocationSize = 10)
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "professorGenerator")
 	private Long idProfessor;
 
 	private String nome;

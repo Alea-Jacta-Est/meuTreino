@@ -31,35 +31,34 @@ public class ExercicioController {
 
 	@PostMapping("/inserir")
 	public ResponseEntity<Exercicio> inserir(@RequestBody Exercicio exercicio) {
-
 		return new ResponseEntity<>(this.service.inserir(exercicio), HttpStatus.OK);
-
 	}
 
 	@PutMapping("/atualizar")
-	public Exercicio atualizar(@RequestBody Exercicio exercicio) {
-		return this.repository.save(exercicio);
+	public ResponseEntity<Exercicio> atualizar(@RequestBody Exercicio exercicio) {
+		return new ResponseEntity<>(this.service.atualizar(exercicio), HttpStatus.OK);
 	}
 
 	@GetMapping("/consultar")
-	public List<Exercicio> consultarTodos() {
-		return this.repository.findAll();
+	public ResponseEntity<List<Exercicio>> consultarTodos() {
+		return new ResponseEntity<>(this.service.consultarTodos(), HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/{id}")
-	public Optional<Exercicio> consultarPorId(@PathVariable Long id) {
-		return this.repository.findById(id);
+	@GetMapping(value = "/consultarUm/{id}")
+	public ResponseEntity<Optional<Exercicio>> consultarUm(@PathVariable Long id) {
+		return new ResponseEntity<>(this.service.consultarUm(id), HttpStatus.OK);
+	}	
+	
+	@GetMapping(value = "/consultarNome/{nome}")
+	public ResponseEntity<List<Exercicio>> consultarPorNome(@PathVariable String nome) {
+		return new ResponseEntity<>(this.service.consultarPorNome(nome), HttpStatus.OK);
 	}
 
-	@DeleteMapping(value = "/{id}")
-	public String deletar(@PathVariable Long id) {
-		this.repository.deleteById(id);
-		return "{\"mensagem\": \"Registro excluído!\" }";
+	@DeleteMapping(value = "deletar/{id}")
+	public ResponseEntity<String> deletar(@PathVariable Long id) {
+		return new ResponseEntity<>(this.service.deletar(id), HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/consultar/{nome}")
-	public List<Exercicio> consultarPorNome(@PathVariable String nome) {
-		return this.repository.findByNomeLike(nome);
-	}
+
 
 }

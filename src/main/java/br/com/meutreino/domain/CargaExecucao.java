@@ -8,14 +8,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class CargaExecucao implements Serializable {
 
 	private static final long serialVersionUID = -6139186010887763805L;
 
+	@SequenceGenerator(name="cargaGenerator",sequenceName = "EXERCICIO_EXECUCAO_SEQ", allocationSize = 10)
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cargaGenerator")
 	private Long idCarga;
 
 	@Column(name = "idExecucao", insertable = false, updatable = false)

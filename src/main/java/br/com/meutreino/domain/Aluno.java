@@ -12,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
 @Entity
@@ -19,8 +21,9 @@ public class Aluno implements Serializable {
 
 	private static final long serialVersionUID = -781058200732224433L;
 
+	@SequenceGenerator(name="alunoGenerator",sequenceName = "ALUNO_SEQ", allocationSize = 10)
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "alunoGenerator")
 	private Long idAluno;
 
 	private String nome;
@@ -32,6 +35,9 @@ public class Aluno implements Serializable {
 	private String telefone;
 
 	private LocalDate dataCadastro;
+	
+	@Transient
+	private int idade;
 
 	@Version
 	private Integer versao;

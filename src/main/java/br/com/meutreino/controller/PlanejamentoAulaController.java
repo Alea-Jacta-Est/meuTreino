@@ -15,45 +15,41 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.meutreino.domain.Aluno;
-import br.com.meutreino.service.AlunoService;
+import br.com.meutreino.domain.PlanejamentoAula;
+import br.com.meutreino.service.PlanejamentoService;
 
 @RestController
-@RequestMapping("/v1/aluno")
-public class AlunoController {
+@RequestMapping("/v1/planejamento")
+public class PlanejamentoAulaController {
 
 	@Autowired
-	private AlunoService service;
+	private PlanejamentoService service;
 
 	@PostMapping("/inserir")
-	public ResponseEntity<Aluno> inserir(@RequestBody Aluno aluno){
-		return new ResponseEntity<Aluno>(this.service.inserir(aluno), HttpStatus.OK);
+	public ResponseEntity<PlanejamentoAula> inserir(@RequestBody PlanejamentoAula planejamentoAula){
+		return new ResponseEntity<PlanejamentoAula>(this.service.inserir(planejamentoAula), HttpStatus.OK);
 	}
 	
 	@PutMapping("/atualizar")
-	public ResponseEntity<Aluno> atualizar(@RequestBody Aluno aluno){
-		return new ResponseEntity<Aluno>(this.service.atualizar(aluno), HttpStatus.OK);
+	public ResponseEntity<PlanejamentoAula> atualizar(@RequestBody PlanejamentoAula planejamentoAula){
+		return new ResponseEntity<PlanejamentoAula>(this.service.atualizar(planejamentoAula), HttpStatus.OK);
 	}
 
 	@GetMapping("/consultar")
-	public ResponseEntity<List<Aluno>> consultarTodos() {
+	public ResponseEntity<List<PlanejamentoAula>> consultarTodos() {
 		return new ResponseEntity<>(this.service.consultarTodos(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/consultarUm/{id}")
-	public ResponseEntity<Optional<Aluno>> consultarUm(@PathVariable Long id){
+	public ResponseEntity<Optional<PlanejamentoAula>> consultarUm(@PathVariable Long id){
 		return new ResponseEntity<>(this.service.consultarUm(id), HttpStatus.OK);
 	}
 	
-	@GetMapping("/consultarNome/{nome}")
-	public ResponseEntity<List<Aluno>> consultarPorNome(@PathVariable String nome){
-		return new ResponseEntity<>(this.service.consultarPorNome(nome), HttpStatus.OK);
+	@GetMapping("/consultarProfessor/{id}")
+	public ResponseEntity<List<PlanejamentoAula>> consultarPorProfessor(@PathVariable Long id){
+		return new ResponseEntity<>(this.service.consultarPorProfessor(id), HttpStatus.OK);
 	}
-	
-	@GetMapping("/consultarEmail/{email}")
-	public ResponseEntity<Optional<Aluno>> consultarPorEmail(@PathVariable String email){
-		return new ResponseEntity<>(this.service.consultarPorEmail(email), HttpStatus.OK);
-	}
+
 	
 	@DeleteMapping("deletar/{id}")
 	public ResponseEntity<String> deletar(@PathVariable Long id){
