@@ -52,7 +52,8 @@ public class PlanejamentoAulaController {
 
 	
 	@DeleteMapping("deletar/{id}")
-	public ResponseEntity<String> deletar(@PathVariable Long id){
+	public ResponseEntity<String> deletar(@PathVariable Long id){		
+			
 		return new ResponseEntity<>(this.service.deletar(id), HttpStatus.OK);
 	}
 

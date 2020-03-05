@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
 import javax.persistence.Version;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Aluno implements Serializable {
@@ -26,12 +27,15 @@ public class Aluno implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "alunoGenerator")
 	private Long idAluno;
 
+	@NotBlank
 	private String nome;
 
 	private LocalDate dataNascimento;
 
+	@NotBlank
 	private String email;
 
+	@NotBlank
 	private String telefone;
 
 	private LocalDate dataCadastro;

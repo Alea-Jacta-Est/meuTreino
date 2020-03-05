@@ -3,6 +3,8 @@ package br.com.meutreino;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -15,6 +17,7 @@ import br.com.meutreino.domain.Aluno;
 import br.com.meutreino.domain.AulaExercicio;
 import br.com.meutreino.domain.Contrato;
 import br.com.meutreino.domain.Exercicio;
+import br.com.meutreino.domain.ExercicioExecucao;
 import br.com.meutreino.domain.PlanejamentoAula;
 import br.com.meutreino.domain.Professor;
 import br.com.meutreino.domain.Treino;
@@ -109,6 +112,26 @@ public class Initializer implements ApplicationListener<ContextRefreshedEvent> {
 		aulaExercicio.setIdExercicio(exercicio.getIdExercicio());
 		aulaExercicio.setOrderExecucao(Short.valueOf("1"));
 		aulaExercicio.setObservacao("Fazer após os exercícios de mobilidade do quadril");
+		
+		ExercicioExecucao exercicioExecucaoInicial = new ExercicioExecucao();
+		exercicioExecucaoInicial.setIdExercicio(aulaExercicio.getIdExercicio());
+		exercicioExecucaoInicial.setIdPlanejamento(aulaExercicio.getIdPlanejamento());		
+		exercicioExecucaoInicial.setNumeroRepeticaoMinimo(8);
+		exercicioExecucaoInicial.setNumeroRepeticaoMaximo(10);
+		exercicioExecucaoInicial.setSerie(2);
+		
+		ExercicioExecucao exercicioExecucaoFinal = new ExercicioExecucao();
+		exercicioExecucaoFinal.setIdExercicio(aulaExercicio.getIdExercicio());
+		exercicioExecucaoFinal.setIdPlanejamento(aulaExercicio.getIdPlanejamento());
+		exercicioExecucaoFinal.setNumeroRepeticaoMinimo(12);
+		exercicioExecucaoFinal.setNumeroRepeticaoMaximo(15);
+		exercicioExecucaoFinal.setSerie(1);
+		
+		Set<ExercicioExecucao> colecaoExercicioExecucao = new HashSet<>();
+		colecaoExercicioExecucao.add(exercicioExecucaoInicial);
+		colecaoExercicioExecucao.add(exercicioExecucaoFinal);
+		
+		aulaExercicio.setExercicioExecucoes(colecaoExercicioExecucao);
 
 		this.aulaExercicioRepository.save(aulaExercicio);
 
@@ -134,7 +157,7 @@ public class Initializer implements ApplicationListener<ContextRefreshedEvent> {
 		treinoAgenda.setIdPlanejamento(treino.getIdPlanejamento());
 		treinoAgenda.setIdTreino(treino.getIdTreino());
 		
-		this.treinoAgendaRepository.save(treinoAgenda);
+		this.treinoAgendaRepository.save(treinoAgenda);		
 
 	}
 

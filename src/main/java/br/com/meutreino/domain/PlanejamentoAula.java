@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class PlanejamentoAula implements Serializable {
@@ -23,6 +24,7 @@ public class PlanejamentoAula implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "planejamentoGenerator")
 	private Long idPlanejamento;
 
+	@NotNull
 	private Long idProfessor;
 
 	private LocalDate dataCadastro;
